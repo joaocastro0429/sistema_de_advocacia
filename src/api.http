@@ -1,2 +1,13 @@
 ###
-GET http://localhost:5555
+GET http://localhost:5555/api/users
+
+###
+POST http://localhost:5555/api/users
+Content-Type: application/json
+
+{
+  "name": "João Castro",
+  "cpf": "123.456.789-00",
+  "maritalStatus": "Solteiro",
+  "profession": "Advogado"
+}

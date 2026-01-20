@@ -1,10 +1,9 @@
 import express from 'express'
+import {router} from './routes/client.routes'
 
 const server= express()
+server.use(express.json())
 
-
-server.get("/",(req,res)=>{
-    res.json({mensage:"hello word"})
-})
+server.use('/api',router)
 
 server.listen(5555)
