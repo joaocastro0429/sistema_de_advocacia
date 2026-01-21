@@ -1,4 +1,4 @@
-import { prisma } from '../lib/prisma'
+import { prisma } from '../../lib/prisma'
 
 interface CreateClientData {
     name: string
@@ -8,7 +8,7 @@ interface CreateClientData {
     profession: string
 }
 
-export const createClient = async (data: CreateClientData) => {
+export const CreateClient = async (data: CreateClientData) => {
   // cast prisma to any because generated client typings may differ in this workspace setup
   const client = await (prisma as any).client.create({
     data: {

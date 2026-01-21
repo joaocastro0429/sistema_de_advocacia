@@ -1,9 +1,9 @@
-import { Request, Response } from 'express'
-import { createClient } from '../services/client.service'
+import { RequestHandler} from 'express'
+import * as CreateClient from '../../clients/services/create.service'
 
-export const create = async (req: Request, res: Response) => {
+export const create:RequestHandler = async (req, res) => {
   try {
-    const { name, cpf, dateOfBirth, maritalStatus, profession } = req.body
+    const { name, cpf, dateOfBirth, maritalStatus, profession } = req.body 
 
     if (!name || !cpf || !profession) {
       return res.status(400).json({
@@ -17,7 +17,7 @@ export const create = async (req: Request, res: Response) => {
       })
     }
 
-    const client = await createClient({
+    const client = await CreateClient.CreateClient ({
       name,
       cpf,
       dateOfBirth,

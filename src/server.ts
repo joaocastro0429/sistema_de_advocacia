@@ -1,5 +1,5 @@
 import express from 'express'
-import {router} from './routes/client.routes'
+import {router} from './clients/routes/client.routes'
 
 const server= express()
 server.use(express.json())
