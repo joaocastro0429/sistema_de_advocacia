@@ -13,14 +13,31 @@ datasource db {
   provider = "postgresql"
 }
 
-model Client{
-  id String @id @default(uuid())
-  name String 
-  cpf String
-  dateOfBirth DateTime?
+model Client {
+  id            String   @id @default(uuid())
+  name          String
+  cpf           String?  @unique
+  cnpj          String?  @unique
+  dateOfBirth   DateTime?
   maritalStatus String?
-  profession String
+  profession    String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  process       Process[]
 
   @@map("clients")
+}
 
-} 
+model Process{
+  id String @id @default(uuid())
+  processNumber String @unique
+  court String
+  type String
+  status String @default("open")
+  clientId String
+  client Client @relation(fields: [clientId], references: [id])
+
+  @@map("process")
+}
+
+

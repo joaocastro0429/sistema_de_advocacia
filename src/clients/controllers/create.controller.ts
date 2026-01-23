@@ -1,27 +1,39 @@
-import { RequestHandler} from 'express'
-import * as CreateClient from '../../clients/services/create.service'
+import { RequestHandler } from 'express'
+import { CreateClient } from '../../clients/services/create.service'
 
-export const create:RequestHandler = async (req, res) => {
+export const create: RequestHandler = async (req, res) => {
   try {
-    const { name, cpf, dateOfBirth, maritalStatus, profession } = req.body 
+    const { name, cpf, cnpj, dateOfBirth, profession } = req.body
 
-    if (!name || !cpf || !profession) {
+    if (!name) {
       return res.status(400).json({
-        error: 'Campos obrigatórios: name, cpf e profession'
+        error: 'Campo obrigatório: name'
       })
     }
 
-    if (cpf.replace(/\D/g, '').length !== 11) {
+    if (!cpf && !cnpj) {
+      return res.status(400).json({
+        error: 'Informe CPF ou CNPJ'
+      })
+    }
+
+    if (cpf && cpf.replace(/\D/g, '').length !== 11) {
       return res.status(400).json({
         error: 'CPF inválido'
       })
     }
 
-    const client = await CreateClient.CreateClient ({
+    if (cnpj && cnpj.replace(/\D/g, '').length !== 14) {
+      return res.status(400).json({
+        error: 'CNPJ inválido'
+      })
+    }
+
+    const client = await CreateClient({
       name,
       cpf,
+      cnpj,
       dateOfBirth,
-      maritalStatus,
       profession
     })
 
@@ -30,13 +42,13 @@ export const create:RequestHandler = async (req, res) => {
       data: client
     })
   } catch (error: any) {
-    if (error.code === 'P2002') {
+    if (error?.code === 'P2002') {
       return res.status(409).json({
-        error: 'CPF já cadastrado'
+        error: 'CPF ou CNPJ já cadastrado'
       })
     }
 
-    console.error('Erro ao criar cliente:', error)
+    console.error(error)
     return res.status(500).json({
       error: 'Erro interno ao criar cliente'
     })
