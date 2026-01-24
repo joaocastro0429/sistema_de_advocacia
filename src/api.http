@@ -2,12 +2,13 @@
 GET http://localhost:5555/api/users
 
 ###
-POST http://localhost:5555/api/users
+POST http://localhost:5555/api/process
 Content-Type: application/json
 
 {
-  "name": "João Castro",
-  "cpf": "123.456.789-00",
-  "maritalStatus": "Solteiro",
-  "profession": "Advogado"
+  "processNumber": "0001234-56.2024.8.26.0100",
+  "court": "TJSP",
+  "type": "Cível",
+  "status": "open",
+  "clientId": "101f3f73-79c8-4686-9dd2-5c440d6b441d"
 }

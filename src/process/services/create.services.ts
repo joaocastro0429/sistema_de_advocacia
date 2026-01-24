@@ -15,8 +15,11 @@ export const ProcessCreateService = async (data: ProcessCreateService) => {
         processNumber: data.processNumber,
         court: data.court,
         type: data.type,
-        status: data.status, // opcional (default "open")
-        clientId: data.clientId,
+        status: data.status, // pode ser undefined se tiver default
+
+        client: {
+          connect: { id: data.clientId! } // liga o processo ao cliente
+        }
       },
     })
 
