@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import {deleteClient} from '../../clients/services/delete.sevice'
+import {deleteClient} from '../../clients/services/delete.service'
 
 export const deleteClientController:RequestHandler= async (req, res) => {
   const  id  = String (req.params.id)

@@ -6,6 +6,7 @@ interface ProcessCreateService {
   type: string
   status?: string
   clientId: string
+  lawyerId: string
 }
 
 export const ProcessCreateService = async (data: ProcessCreateService) => {
@@ -19,6 +20,9 @@ export const ProcessCreateService = async (data: ProcessCreateService) => {
 
         client: {
           connect: { id: data.clientId! } // liga o processo ao cliente
+        },
+        lawyer: {
+          connect: { id: data.lawyerId! }
         }
       },
     })

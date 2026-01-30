@@ -1,13 +1,15 @@
 import express from 'express'
 import {router} from './clients/routes/client.routes'
 import {ProcessRouter} from './process/routes/routes'
-
-const server= express()
+import {advogadoRoutes} from './lawyers/routes/routes'
+const server = express()
 server.use(express.json())
 
-server.use('/api',router)
-server.use('/api',ProcessRouter)
+server.use('/api', router)
+server.use('/api', ProcessRouter)
+server.use('/api',advogadoRoutes)
 
 
-
-server.listen(5555)
+server.listen(3333, () => {
+    console.log('Server is running on port 3333')
+})

@@ -1,14 +1,15 @@
 ###
-GET http://localhost:5555/api/users
+GET   http://localhost:3333/api/lawyer
 
-###
-POST http://localhost:5555/api/process
+### 
+DELETE  http://localhost:3333/api/lawyer/1deefdf1-1c22-4e19-8771-9b8d3eb47c65
 Content-Type: application/json
 
 {
-  "processNumber": "0001234-56.2024.8.26.0100",
-  "court": "TJSP",
-  "type": "Cível",
-  "status": "open",
-  "clientId": "101f3f73-79c8-4686-9dd2-5c440d6b441d"
+  "name": "João Castro3",
+  "email": "joao@advocacia.com",
+  "oabNumber": "OAB123452",
+  "specialty": "Direito Civil1",
+  "phone": "119999999992"
 }
+

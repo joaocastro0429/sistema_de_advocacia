@@ -67,7 +67,8 @@ export const JsonNull = runtime.JsonNull;
  */
 export const AnyNull = runtime.AnyNull;
 export const ModelName = {
-    Client: 'Client'
+    User: 'User',
+    Post: 'Post'
 };
 /**
  * Enums
@@ -78,13 +79,17 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
     RepeatableRead: 'RepeatableRead',
     Serializable: 'Serializable'
 });
-export const ClientScalarFieldEnum = {
+export const UserScalarFieldEnum = {
     id: 'id',
-    name: 'name',
-    cpf: 'cpf',
-    dataNascimento: 'dataNascimento',
-    estadoCivil: 'estadoCivil',
-    profissao: 'profissao'
+    email: 'email',
+    name: 'name'
+};
+export const PostScalarFieldEnum = {
+    id: 'id',
+    title: 'title',
+    content: 'content',
+    published: 'published',
+    authorId: 'authorId'
 };
 export const SortOrder = {
     asc: 'asc',
@@ -99,3 +104,4 @@ export const NullsOrder = {
     last: 'last'
 };
 export const defineExtension = runtime.Extensions.defineExtension;
+//# sourceMappingURL=prismaNamespace.js.map

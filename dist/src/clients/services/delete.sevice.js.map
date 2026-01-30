@@ -1,0 +1,1 @@
+{"version":3,"file":"delete.sevice.js","sourceRoot":"","sources":["../../../../src/clients/services/delete.sevice.ts"],"names":[],"mappings":"AAAA,OAAO,EAAC,MAAM,EAAC,MAAM,kBAAkB,CAAA;AAEvC,MAAM,CAAC,MAAM,YAAY,GAAG,KAAK,EAAE,EAAU,EAAE,EAAE;IAC/C,MAAM,MAAM,GAAG,MAAM,MAAM,CAAC,MAAM,CAAC,MAAM,CAAC;QACxC,KAAK,EAAE;YACL,EAAE;SACH;KACF,CAAC,CAAA;IAEF,OAAO,MAAM,CAAA;AACf,CAAC,CAAA"}

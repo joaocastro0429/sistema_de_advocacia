@@ -1,9 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
+// generator e datasource configurados corretamente
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -14,30 +9,56 @@ datasource db {
 }
 
 model Client {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   name          String
-  cpf           String?  @unique
-  cnpj          String?  @unique
+  cpf           String?   @unique
+  cnpj          String?   @unique
   dateOfBirth   DateTime?
   maritalStatus String?
   profession    String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  process       Process[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Pluralize o nome da relação para clareza: um cliente tem vários processos
+  processes     Process[]
 
   @@map("clients")
 }
 
-model Process{
-  id String @id @default(uuid())
-  processNumber String @unique
-  court String
-  type String
-  status String @default("open")
-  clientId String
-  client Client @relation(fields: [clientId], references: [id])
+model Process {
+  id            String   @id @default(uuid())
+  processNumber String   @unique
+  court         String
+  type          String
+  status        String   @default("open")
+  
+  // Relacionamento com Lawyer
+  lawyerId      String
+  lawyer        Lawyer   @relation(fields: [lawyerId], references: [id])
+  
+  // Relacionamento com Client
+  clientId      String
+  client        Client   @relation(fields: [clientId], references: [id])
 
-  @@map("process")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("processes") // Mudei para plural para manter o padrão
 }
 
+model Lawyer {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  oabNumber     String    @unique
+  specialty     String
+  phone         String?
+  
+  // Um advogado tem vários processos
+  processes     Process[]
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
+  @@map("lawyers")
+}
