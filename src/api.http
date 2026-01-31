@@ -1,15 +1,15 @@
 ###
-GET   http://localhost:3333/api/lawyer
+GET   http://localhost:3333/api/users
 
 ### 
-DELETE  http://localhost:3333/api/lawyer/1deefdf1-1c22-4e19-8771-9b8d3eb47c65
+POST   http://localhost:3333/appointme
 Content-Type: application/json
 
-{
-  "name": "João Castro3",
-  "email": "joao@advocacia.com",
-  "oabNumber": "OAB123452",
-  "specialty": "Direito Civil1",
-  "phone": "119999999992"
+ {
+  "title": "Consulta Jurídica",
+  "description": "Discussão sobre processo trabalhista",
+  "date": "2026-02-15T14:30:00.000Z",
+  "status": "PENDING",
+ 
 }
 

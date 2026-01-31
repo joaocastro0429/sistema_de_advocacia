@@ -1,10 +1,22 @@
-import {prisma} from '../../lib/prisma'
-
+import { prisma } from "../../lib/prisma"
 
 export const updateClient = async (id: string, data: any) => {
-  return await prisma.process.update({
-    where: { id },
-    data,
-    include: { client: true }
-  })
+  try {
+    return await prisma.client.update({
+      where: { id },
+      data: {
+        name: data.name,
+        cpf: data.cpf,
+        profession: data.profession,
+
+        // 👇 Conversão segura
+        dateOfBirth: data.dateOfBirth
+          ? new Date(data.dateOfBirth)
+          : undefined,
+      },
+    })
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }

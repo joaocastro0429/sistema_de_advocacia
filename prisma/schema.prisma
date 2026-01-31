@@ -18,6 +18,8 @@ model Client {
   profession    String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+
+  appointments  Appointment[]
   
   // Pluralize o nome da relação para clareza: um cliente tem vários processos
   processes     Process[]
@@ -33,15 +35,18 @@ model Process {
   status        String   @default("open")
   
   // Relacionamento com Lawyer
-  lawyerId      String
-  lawyer        Lawyer   @relation(fields: [lawyerId], references: [id])
+  lawyerId      String?
+  lawyer        Lawyer?   @relation(fields: [lawyerId], references: [id])
   
   // Relacionamento com Client
-  clientId      String
-  client        Client   @relation(fields: [clientId], references: [id])
+  clientId    String?
+  client        Client?   @relation(fields: [clientId], references: [id])
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  appointment  Appointment[]
+
 
   @@map("processes") // Mudei para plural para manter o padrão
 }
@@ -60,5 +65,45 @@ model Lawyer {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
+  appointment Appointment[]
+
+
   @@map("lawyers")
 }
+
+
+model Appointment {
+  id          String   @id @default(uuid())
+  
+  title       String   // Ex: "Reunião inicial", "Audiência", "Retorno"
+  description String?  // Observações
+  
+  date        DateTime // Data e hora do agendamento
+  
+  status      AppointmentStatus @default(SCHEDULED)
+
+  // 🔗 Relação com Cliente
+  clientId    String?
+  client      Client ?  @relation(fields: [clientId], references: [id])
+
+  // 🔗 Relação com Advogado
+  lawyerId    String?
+  lawyer      Lawyer?   @relation(fields: [lawyerId], references: [id])
+
+  // 🔗 (Opcional) Pode estar ligado a um processo
+  processId   String?
+  process     Process? @relation(fields: [processId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("appointments")
+}
+
+enum AppointmentStatus {
+  SCHEDULED   // agendado
+  COMPLETED   // realizado
+  CANCELED    // cancelado
+  NO_SHOW     // cliente não compareceu
+}
+

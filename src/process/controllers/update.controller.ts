@@ -1,13 +1,35 @@
 import { RequestHandler } from 'express'
-import {updateLawyer} from '../../lawyers/services/atualizar.service'
-export const updateLawyerController:RequestHandler = async (req, res) => {
-  const  id  = String (req.params.id)
-  const data = req.body
+import { updateProcess } from '../../process/services/update.service'
 
+export const updateProcessController: RequestHandler = async (req, res) => {
   try {
-    const updatedLawyer= await updateLawyer(id, data)
+    const id = String(req.params.id)
+    const data = req.body
+
+    if (!id) {
+      return res.status(400).json({ error: 'ID do advogado é obrigatório' })
+    }
+
+    const updatedLawyer = await updateProcess(id, data)
     return res.json(updatedLawyer)
-  } catch (error) {
-    return res.status(500).json({ error: 'Failed to update client' })
+  } catch (error: any) {
+    console.error('Erro ao atualizar advogado:', error.message)
+
+    // Validação de dados vazios
+    if (error.message?.includes('Nenhum campo válido')) {
+      return res.status(400).json({ error: error.message })
+    }
+
+    // Advogado não encontrado
+    if (error.message?.includes('não encontrado') || error.code === 'P2025') {
+      return res.status(404).json({ error: 'Advogado não encontrado' })
+    }
+
+    // Email ou OAB duplicados
+    if (error.code === 'P2002') {
+      return res.status(409).json({ error: 'Email ou OAB já cadastrados' })
+    }
+
+    return res.status(500).json({ error: 'Erro ao atualizar advogado', details: error.message })
   }
 }

@@ -33,3 +33,6 @@ export const updateLawyerController: RequestHandler = async (req, res) => {
     return res.status(500).json({ error: 'Erro ao atualizar advogado', details: error.message })
   }
 }
+
+
+

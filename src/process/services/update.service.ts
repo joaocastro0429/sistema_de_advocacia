@@ -1,8 +1,14 @@
-import {prisma} from '../../lib/prisma'
+import { Prisma } from '../../../generated/prisma'
+import { prisma } from '../../lib/prisma'
 
+// Campos permitidos para atualizar (conforme schema Lawyer)
+export const updateProcess = async (
+  id: string,
+  data: Prisma.ProcessUpdateInput
+) => {
+  if (!id) throw new Error('ID is required')
 
-export const updateLawyer = async (id: string, data: any) => {
-  return await prisma.process.update({
+  return await prisma.lawyer.update({
     where: { id },
     data
   })

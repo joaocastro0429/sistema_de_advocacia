@@ -7,14 +7,12 @@ import { ProcessCreateService } from '../services/create.services'
 
 export const CreateProcessController: RequestHandler = async (req, res) => {
   try {
-    const { processNumber, court, type,clientId, lawyerId } = req.body
+    const { processNumber, court, type } = req.body
 
     const process = await ProcessCreateService({
       processNumber,
       court,
-      type,
-      clientId,
-      lawyerId
+      type
     })
 
     return res.status(201).json(process)

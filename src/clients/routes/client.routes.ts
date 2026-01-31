@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import {create} from   '../../clients/controllers/create.controller'
+import {createController} from   '../../clients/controllers/create.controller'
 import {getClient } from '../../clients/controllers/get.controller'
 import {getClientByIdController } from '../../clients/controllers/getById.controller'
 import { updateClientController } from '../controllers/update.controller'
@@ -7,7 +7,7 @@ import { deleteClientController } from '../controllers/delete.controller'
 
 const router= Router()
 
-router.post("/users",create)
+router.post("/users",createController)
 router.get("/users",getClient)
 router.get("/users/:id",getClientByIdController)
 router.put("/users/:id",updateClientController)

@@ -1,13 +1,15 @@
-import { prisma } from '../../lib/prisma'
+import { prisma } from "../../lib/prisma"
+
 
 interface ProcessCreateService {
-  processNumber: string
-  court: string
-  type: string
-  status?: string
-  clientId: string
-  lawyerId: string
-}
+   processNumber: string,
+    court: string,
+     type: string,
+      status?: string,
+       clientId?: string,
+       lawyerId?: string 
+      }
+
 
 export const ProcessCreateService = async (data: ProcessCreateService) => {
   try {
@@ -16,20 +18,22 @@ export const ProcessCreateService = async (data: ProcessCreateService) => {
         processNumber: data.processNumber,
         court: data.court,
         type: data.type,
-        status: data.status, // pode ser undefined se tiver default
+        status: data.status,
 
-        client: {
-          connect: { id: data.clientId! } // liga o processo ao cliente
-        },
-        lawyer: {
-          connect: { id: data.lawyerId! }
-        }
+        // Só adiciona relação se existir ID
+        ...(data.clientId && {
+          client: { connect: { id: data.clientId } },
+        }),
+
+        ...(data.lawyerId && {
+          lawyer: { connect: { id: data.lawyerId } },
+        }),
       },
     })
 
     return process
   } catch (error) {
-    console.error(error)
+    console.error("ERRO REAL:", error) // 👈 importante pra debugar
     throw new Error('Erro ao criar processo')
   }
 }
