@@ -1,15 +1,19 @@
 ###
+GET http://localhost:3333/api/filings/12b55209-32f7-4e9d-9b02-71045ba69dd0
+
+###
 GET   http://localhost:3333/api/users
 
 ### 
-POST   http://localhost:3333/appointme
+PUT  http://localhost:3333/api/filings/12b55209-32f7-4e9d-9b02-71045ba69dd0
 Content-Type: application/json
 
+
  {
-  "title": "Consulta Jurídica",
-  "description": "Discussão sobre processo trabalhista",
-  "date": "2026-02-15T14:30:00.000Z",
-  "status": "PENDING",
- 
+  "title": "Petição Inicial7",
+  "description": "Ação de indenização",
+  "type": "INITIAL_PETITION",
+  "status": "DRAFT"
+  
 }
 

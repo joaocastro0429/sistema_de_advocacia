@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { updateLawyer } from '../../lawyers/services/atualizar.service'
+import { updateLawyer } from '../services/update.service'
 
 export const updateLawyerController: RequestHandler = async (req, res) => {
   try {

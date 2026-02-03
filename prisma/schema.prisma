@@ -19,91 +19,131 @@ model Client {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  appointments  Appointment[]
-  
+  appointments Appointment[]
+
   // Pluralize o nome da relação para clareza: um cliente tem vários processos
-  processes     Process[]
+  processes Process[]
 
   @@map("clients")
 }
 
 model Process {
-  id            String   @id @default(uuid())
-  processNumber String   @unique
+  id            String @id @default(uuid())
+  processNumber String @unique
   court         String
   type          String
-  status        String   @default("open")
-  
+  status        String @default("open")
+
   // Relacionamento com Lawyer
-  lawyerId      String?
-  lawyer        Lawyer?   @relation(fields: [lawyerId], references: [id])
-  
+  lawyerId String?
+  lawyer   Lawyer? @relation(fields: [lawyerId], references: [id])
+
   // Relacionamento com Client
-  clientId    String?
-  client        Client?   @relation(fields: [clientId], references: [id])
+  clientId String?
+  client   Client? @relation(fields: [clientId], references: [id])
 
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  appointment  Appointment[]
-
+  appointment Appointment[]
+  filings     Filing[]
 
   @@map("processes") // Mudei para plural para manter o padrão
 }
 
 model Lawyer {
-  id            String    @id @default(uuid())
-  name          String
-  email         String    @unique
-  oabNumber     String    @unique
-  specialty     String
-  phone         String?
-  
+  id        String  @id @default(uuid())
+  name      String
+  email     String  @unique
+  oabNumber String  @unique
+  specialty String
+  phone     String?
+
   // Um advogado tem vários processos
-  processes     Process[]
-  
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  processes Process[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   appointment Appointment[]
-
+  filings     Filing[]
 
   @@map("lawyers")
 }
 
-
 model Appointment {
-  id          String   @id @default(uuid())
-  
-  title       String   // Ex: "Reunião inicial", "Audiência", "Retorno"
-  description String?  // Observações
-  
-  date        DateTime // Data e hora do agendamento
-  
-  status      AppointmentStatus @default(SCHEDULED)
+  id String @id @default(uuid())
+
+  title       String // Ex: "Reunião inicial", "Audiência", "Retorno"
+  description String? // Observações
+
+  date DateTime // Data e hora do agendamento
+
+  status  AppointmentStatus @default(SCHEDULED)
 
   // 🔗 Relação com Cliente
-  clientId    String?
-  client      Client ?  @relation(fields: [clientId], references: [id])
+  clientId String?
+  client   Client? @relation(fields: [clientId], references: [id])
 
   // 🔗 Relação com Advogado
-  lawyerId    String?
-  lawyer      Lawyer?   @relation(fields: [lawyerId], references: [id])
+  lawyerId String?
+  lawyer   Lawyer? @relation(fields: [lawyerId], references: [id])
 
   // 🔗 (Opcional) Pode estar ligado a um processo
-  processId   String?
-  process     Process? @relation(fields: [processId], references: [id])
+  processId String?
+  process   Process? @relation(fields: [processId], references: [id])
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("appointments")
 }
 
 enum AppointmentStatus {
-  SCHEDULED   // agendado
-  COMPLETED   // realizado
-  CANCELED    // cancelado
-  NO_SHOW     // cliente não compareceu
+  SCHEDULED // agendado
+  COMPLETED // realizado
+  CANCELED // cancelado
+  NO_SHOW // cliente não compareceu
 }
 
+model Filing {
+  id String @id @default(uuid())
+
+  title       String // "Petição Inicial", "Contestação", "Recurso", etc.
+  description String? // Observações internas
+
+  type   FilingType
+  status FilingStatus @default(DRAFT)
+
+  fileUrl        String? // caminho do PDF ou documento
+  protocolNumber String? // número de protocolo no tribunal
+
+  // 🔗 Processo (obrigatório)
+  processId String ?
+  process   Process? @relation(fields: [processId], references: [id])
+
+  // 🔗 Advogado que criou
+  lawyerId String?
+  lawyer   Lawyer? @relation(fields: [lawyerId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("filings")
+}
+
+enum FilingType {
+  INITIAL_PETITION
+  DEFENSE
+  APPEAL
+  MOTION
+  EVIDENCE
+  OTHER
+}
+
+enum FilingStatus {
+  DRAFT // rascunho
+  FILED // protocolada
+  ACCEPTED // aceita pelo tribunal
+  REJECTED // rejeitada
+}

@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express';
-import { deleteLawyer } from '../services/deletar.service';
+import { deleteLawyer } from '../services/delete.service';
 
 export const deleteLawyerController: RequestHandler = async (req, res) => {
   const id  = String (req.params.id)
