@@ -1,0 +1,12 @@
+import { CreateController } from '../controllers/create.controller';
+import { FilingsController } from '../controllers/get.controller';
+import { GetByIdController } from '../controllers/getById';
+import { deleteFilingController } from '../controllers/delete.controller';
+import { updateFilingController } from '../controllers/update.controller';
+import { Router } from 'express';
+export const filingRoutes = Router();
+filingRoutes.post('/filings', CreateController);
+filingRoutes.get('/filings', FilingsController);
+filingRoutes.get('/filings/:id', GetByIdController);
+filingRoutes.put('/filings/:id', updateFilingController);
+filingRoutes.delete('/filings/:id', deleteFilingController);

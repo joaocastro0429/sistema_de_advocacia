@@ -8,6 +8,16 @@ datasource db {
   provider = "postgresql"
 }
 
+model User{
+  id  String @id @default(uuid())
+  name String?
+  email  String @unique
+  password String
+  role String @default("user")
+  active Boolean @default(true) // Added active field
+  createdAt DateTime @default(now()) // Added createdAt field
+  updatedAt DateTime @updatedAt // Added updatedAt field
+}
 model Client {
   id            String    @id @default(uuid())
   name          String

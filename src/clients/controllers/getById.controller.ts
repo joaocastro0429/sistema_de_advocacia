@@ -1,6 +1,28 @@
 import {  RequestHandler} from 'express'
 import { getClientById } from '../../clients/services/getById.service'
 
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Get a client by ID
+ *     tags: [Clients]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: The requested client.
+ *       404:
+ *         description: Client not found.
+ *       500:
+ *         description: Internal server error
+ */
 export const getClientByIdController:RequestHandler = async (
   req,
   res

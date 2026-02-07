@@ -1,5 +1,5 @@
 import { prisma } from "../../lib/prisma";
-import { Appointment, AppointmentStatus } from "@prisma/client";
+import { Appointment, AppointmentStatus } from '../../generated/prisma';
 
 interface IUpdateAppointment {
   title?: string;

@@ -5,15 +5,6 @@ GET http://localhost:3333/api/filings/12b55209-32f7-4e9d-9b02-71045ba69dd0
 GET   http://localhost:3333/api/users
 
 ### 
-PUT  http://localhost:3333/api/filings/12b55209-32f7-4e9d-9b02-71045ba69dd0
-Content-Type: application/json
 
 
- {
-  "title": "Petição Inicial7",
-  "description": "Ação de indenização",
-  "type": "INITIAL_PETITION",
-  "status": "DRAFT"
-  
-}
 
